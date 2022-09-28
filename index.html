@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Page Title</title>
+</head>
+<body>
+<script>
+
+    var compChoice = 'string';//comp chooses rock, paper, or scissors saved in variable
+    var playerChoice = 'string';
+
+    //player input opens, player chooses rock, paper, or scissors saved in variable
+    let playerTurn = function () {
+        playerChoice = prompt("Please enter rock, paper, or scissors.").toLowerCase();
+        console.log('You choose ' + playerChoice);
+    }
+    playerTurn();
+
+    let compTurn = function (){
+        let random = Math.floor(Math.random() * 3);
+        if (random === 0){
+            compChoice = 'rock';
+        } else if (random === 1){
+            compChoice = 'paper';
+        } else {
+            compChoice = 'scissors';
+        }
+        console.log('Computer chooses ' + compChoice);
+    }
+    compTurn();
+    
+    //if player choice beats comp, log Win!, if player choice loses, log Lose!, 
+    //if player choice matches comp, log Try again
+    if (playerChoice === compChoice){
+        console.log('Tie. Try again.')
+    } else if(playerChoice === 'rock' && compChoice === 'paper'){
+        console.log(compChoice + ' beats ' + playerChoice + '! You lose.')
+    } else if(playerChoice === 'rock' && compChoice === 'scissors'){
+        console.log(playerChoice + ' beats ' + compChoice + '! You win!')
+    } else if(playerChoice === 'paper' && compChoice === 'scissors'){
+        console.log(compChoice + ' beats ' + playerChoice + '! You lose.')
+    } else if(playerChoice === 'paper' && compChoice === 'rock'){
+        console.log(playerChoice + ' beats ' + compChoice + '! You win!')
+    } else if(playerChoice === 'scissors' && compChoice === 'rock'){
+        console.log(compChoice + ' beats ' + playerChoice + '! You lose.')
+    } else if(playerChoice === 'scissors' && compChoice === 'paper'){
+        console.log(playerChoice + ' beats ' + compChoice + '! You win!')
+    }
+    
+</script>
+</body>
+</html>
