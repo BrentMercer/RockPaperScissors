@@ -6,8 +6,8 @@
 </head>
 <body>
     <div style="padding:20% 35% 35%;">
-        <h1>Rock, Paper, Scissors</h1>
-        <p>Type your selection and push the button.</p>
+        <h1>Rock! Paper! Scissors!</h1>
+        <p>Type your selection and push play</p>
         <input type="text" id="playerinput">
         <input type="button" value="Play" onclick="playerTurn();">
         <p id="playerchoice"> </p>
@@ -31,7 +31,7 @@
     //player input opens, player chooses rock, paper, or scissors saved in variable
     let playerTurn = function () {
         playerChoice = document.getElementById('playerinput').value.toLowerCase();
-        if (playerChoice == 'rock' || playerChoice == 'paper' || playerChoice == 'scissors'){
+        if (playerChoice === 'rock' || playerChoice === 'paper' || playerChoice === 'scissors'){
             document.getElementById('playerchoice').innerHTML = 'You choose ' + playerChoice;
             compTurn();
         } else{
@@ -60,22 +60,28 @@
             document.getElementById('result').innerHTML = 'Tie. Try again.';
         } else if(playerChoice === 'rock' && compChoice === 'paper'){
             document.getElementById('result').innerHTML = 'Paper beats ' + playerChoice + '! You lose.';
-            document.getElementById('losses').innerHTML = losses = losses + 1;
+            losses++;
+            document.getElementById('losses').innerHTML = losses;
         } else if(playerChoice === 'rock' && compChoice === 'scissors'){
             document.getElementById('result').innerHTML = 'Rock beats ' + compChoice + '! You win!';
-            document.getElementById('wins').innerHTML = wins = wins + 1;
+            wins++;
+            document.getElementById('wins').innerHTML = wins;
         } else if(playerChoice === 'paper' && compChoice === 'scissors'){
             document.getElementById('result').innerHTML = 'Scissors beats ' + playerChoice + '! You lose.';
-            document.getElementById('losses').innerHTML = losses = losses + 1;
+            losses++;
+            document.getElementById('losses').innerHTML = losses;
         } else if(playerChoice === 'paper' && compChoice === 'rock'){
             document.getElementById('result').innerHTML = 'Paper beats ' + compChoice + '! You win!';
-            document.getElementById('wins').innerHTML = wins = wins + 1;
+            wins++;
+            document.getElementById('wins').innerHTML = wins;
         } else if(playerChoice === 'scissors' && compChoice === 'rock'){
             document.getElementById('result').innerHTML = 'Rock beats ' + playerChoice + '! You lose.';
-            document.getElementById('losses').innerHTML = losses = losses + 1;
+            losses++;
+            document.getElementById('losses').innerHTML = losses;
         } else if(playerChoice === 'scissors' && compChoice === 'paper'){
             document.getElementById('result').innerHTML = 'Scissors beats ' + compChoice + '! You win!';
-            document.getElementById('wins').innerHTML = wins = wins + 1;
+            wins++;
+            document.getElementById('wins').innerHTML = wins;
         }
     }
     
