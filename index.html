@@ -5,18 +5,41 @@
     <title>Page Title</title>
 </head>
 <body>
+    <div style="padding:20% 35% 35%;">
+        <h1>Rock, Paper, Scissors</h1>
+        <p>Type your selection and push the button.</p>
+        <input type="text" id="playerinput">
+        <input type="button" value="Play" onclick="playerTurn();">
+        <p id="playerchoice"> </p>
+        <p id="computerchoice"> </p>
+        <p id="result" style="font-weight: 900"> </p>
+        <div>
+            <p>Wins: <span id="wins"></span></p>
+            <p>Losses: <span id="losses"></span></p>
+        </div>
+    </div>
 <script>
 
-    var compChoice = 'string';//comp chooses rock, paper, or scissors saved in variable
+    var compChoice = 'string';
     var playerChoice = 'string';
+    var wins = 0;
+    var losses = 0;
+
+    document.getElementById('wins').innerHTML = 0;
+    document.getElementById('losses').innerHTML = 0;
 
     //player input opens, player chooses rock, paper, or scissors saved in variable
     let playerTurn = function () {
-        playerChoice = prompt("Please enter rock, paper, or scissors.").toLowerCase();
-        console.log('You choose ' + playerChoice);
+        playerChoice = document.getElementById('playerinput').value.toLowerCase();
+        if (playerChoice == 'rock' || playerChoice == 'paper' || playerChoice == 'scissors'){
+            document.getElementById('playerchoice').innerHTML = 'You choose ' + playerChoice;
+            compTurn();
+        } else{
+            document.getElementById('playerchoice').innerHTML = 'Check your spelling and try again there boss.';
+        }
     }
-    playerTurn();
-
+    
+    //comp chooses rock, paper, or scissors saved in variable
     let compTurn = function (){
         let random = Math.floor(Math.random() * 3);
         if (random === 0){
@@ -26,27 +49,36 @@
         } else {
             compChoice = 'scissors';
         }
-        console.log('Computer chooses ' + compChoice);
+        document.getElementById('computerchoice').innerHTML = 'Computer chose ' + compChoice;
+        checkWinner();
     }
-    compTurn();
     
     //if player choice beats comp, log Win!, if player choice loses, log Lose!, 
     //if player choice matches comp, log Try again
-    if (playerChoice === compChoice){
-        console.log('Tie. Try again.')
-    } else if(playerChoice === 'rock' && compChoice === 'paper'){
-        console.log(compChoice + ' beats ' + playerChoice + '! You lose.')
-    } else if(playerChoice === 'rock' && compChoice === 'scissors'){
-        console.log(playerChoice + ' beats ' + compChoice + '! You win!')
-    } else if(playerChoice === 'paper' && compChoice === 'scissors'){
-        console.log(compChoice + ' beats ' + playerChoice + '! You lose.')
-    } else if(playerChoice === 'paper' && compChoice === 'rock'){
-        console.log(playerChoice + ' beats ' + compChoice + '! You win!')
-    } else if(playerChoice === 'scissors' && compChoice === 'rock'){
-        console.log(compChoice + ' beats ' + playerChoice + '! You lose.')
-    } else if(playerChoice === 'scissors' && compChoice === 'paper'){
-        console.log(playerChoice + ' beats ' + compChoice + '! You win!')
+    let checkWinner = function (x,y){
+        if (playerChoice === compChoice){
+            document.getElementById('result').innerHTML = 'Tie. Try again.';
+        } else if(playerChoice === 'rock' && compChoice === 'paper'){
+            document.getElementById('result').innerHTML = 'Paper beats ' + playerChoice + '! You lose.';
+            document.getElementById('losses').innerHTML = losses = losses + 1;
+        } else if(playerChoice === 'rock' && compChoice === 'scissors'){
+            document.getElementById('result').innerHTML = 'Rock beats ' + compChoice + '! You win!';
+            document.getElementById('wins').innerHTML = wins = wins + 1;
+        } else if(playerChoice === 'paper' && compChoice === 'scissors'){
+            document.getElementById('result').innerHTML = 'Scissors beats ' + playerChoice + '! You lose.';
+            document.getElementById('losses').innerHTML = losses = losses + 1;
+        } else if(playerChoice === 'paper' && compChoice === 'rock'){
+            document.getElementById('result').innerHTML = 'Paper beats ' + compChoice + '! You win!';
+            document.getElementById('wins').innerHTML = wins = wins + 1;
+        } else if(playerChoice === 'scissors' && compChoice === 'rock'){
+            document.getElementById('result').innerHTML = 'Rock beats ' + playerChoice + '! You lose.';
+            document.getElementById('losses').innerHTML = losses = losses + 1;
+        } else if(playerChoice === 'scissors' && compChoice === 'paper'){
+            document.getElementById('result').innerHTML = 'Scissors beats ' + compChoice + '! You win!';
+            document.getElementById('wins').innerHTML = wins = wins + 1;
+        }
     }
+    
     
 </script>
 </body>
