@@ -2,90 +2,85 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Page Title</title>
+    <title>Rock! Paper! Scissors!</title>
 </head>
 <body>
     <div style="padding:20% 35% 35%;">
         <h1>Rock! Paper! Scissors!</h1>
-        <p>Type your selection and push play</p>
-        <input type="text" id="playerinput">
-        <input type="button" value="Play" onclick="playerTurn();">
-        <p id="playerchoice"> </p>
-        <p id="computerchoice"> </p>
-        <p id="result" style="font-weight: 900"> </p>
-        <div>
-            <p>Wins: <span id="wins"></span></p>
-            <p>Losses: <span id="losses"></span></p>
-        </div>
+        <p>Make your selection</p>
+        
+        <button id="rock" value="Rock">Rock</button>
+        <button id="paper" value="Paper">Paper</button>
+        <button id="scissors" value="Scissors">Scissors</button>
+        
+        <div id="playerchoice"> </div>
+        <div id="computerchoice"> </div>
+        <div id="result" style="font-weight: 900"> </div>
+        <div>Wins: <span id="wins"></span></div>
+        <div>Losses: <span id="losses"></span></div>
     </div>
 <script>
-
-    var compChoice = 'string';
-    var playerChoice = 'string';
+    
     var wins = 0;
     var losses = 0;
+    var playerSelection = 'string';
+    var computerSelection = 'string';
+    var rockPapScis;
 
     document.getElementById('wins').innerHTML = 0;
     document.getElementById('losses').innerHTML = 0;
 
-    //player input opens, player chooses rock, paper, or scissors saved in variable
-    let playerTurn = function () {
-        playerChoice = document.getElementById('playerinput').value.toLowerCase();
-        if (playerChoice === 'rock' || playerChoice === 'paper' || playerChoice === 'scissors'){
-            document.getElementById('playerchoice').innerHTML = 'You choose ' + playerChoice;
-            compTurn();
-        } else{
-            document.getElementById('playerchoice').innerHTML = 'Check your spelling and try again there boss.';
-        }
+    // setup button listener to set player selection to variable and start new round
+    const buttons = document.querySelectorAll('button');
+    buttons.forEach(button => button.addEventListener('click', ()=>{
+        rockPapScis = button.value;
+        playRound(rockPapScis);
+    }));
+
+    //take player selection, prints to screen, returns selection
+    function playerTurn(select) {
+        playerSelection = select;
+        document.getElementById('playerchoice').innerHTML = 'Player: ' + playerSelection;
+        return playerSelection;
     }
     
     //comp chooses rock, paper, or scissors saved in variable
-    let compTurn = function (){
+    function compTurn(){
         let random = Math.floor(Math.random() * 3);
         if (random === 0){
-            compChoice = 'rock';
+            computerSelection = 'Rock';
         } else if (random === 1){
-            compChoice = 'paper';
+            computerSelection = 'Paper';
         } else {
-            compChoice = 'scissors';
+            computerSelection = 'Scissors';
         }
-        document.getElementById('computerchoice').innerHTML = 'Computer chose ' + compChoice;
-        checkWinner();
+        document.getElementById('computerchoice').innerHTML = 'Computer: ' + computerSelection;
+        return computerSelection;
     }
     
-    //if player choice beats comp, log Win!, if player choice loses, log Lose!, 
-    //if player choice matches comp, log Try again
-    let checkWinner = function (x,y){
-        if (playerChoice === compChoice){
+    //check if player wins, loses, or ties
+    //adds score and prints to screen
+    function playRound(select){
+        playerSelection = playerTurn(select);
+        computerSelection = compTurn();
+        if (playerSelection === computerSelection){
             document.getElementById('result').innerHTML = 'Tie. Try again.';
-        } else if(playerChoice === 'rock' && compChoice === 'paper'){
-            document.getElementById('result').innerHTML = 'Paper beats ' + playerChoice + '! You lose.';
-            losses++;
-            document.getElementById('losses').innerHTML = losses;
-        } else if(playerChoice === 'rock' && compChoice === 'scissors'){
-            document.getElementById('result').innerHTML = 'Rock beats ' + compChoice + '! You win!';
-            wins++;
-            document.getElementById('wins').innerHTML = wins;
-        } else if(playerChoice === 'paper' && compChoice === 'scissors'){
-            document.getElementById('result').innerHTML = 'Scissors beats ' + playerChoice + '! You lose.';
-            losses++;
-            document.getElementById('losses').innerHTML = losses;
-        } else if(playerChoice === 'paper' && compChoice === 'rock'){
-            document.getElementById('result').innerHTML = 'Paper beats ' + compChoice + '! You win!';
-            wins++;
-            document.getElementById('wins').innerHTML = wins;
-        } else if(playerChoice === 'scissors' && compChoice === 'rock'){
-            document.getElementById('result').innerHTML = 'Rock beats ' + playerChoice + '! You lose.';
-            losses++;
-            document.getElementById('losses').innerHTML = losses;
-        } else if(playerChoice === 'scissors' && compChoice === 'paper'){
-            document.getElementById('result').innerHTML = 'Scissors beats ' + compChoice + '! You win!';
-            wins++;
-            document.getElementById('wins').innerHTML = wins;
-        }
+        } else if(
+            playerSelection === 'Rock' && computerSelection === 'Paper' ||
+            playerSelection === 'Paper' && computerSelection === 'Scissors' ||
+            playerSelection === 'Scissors' && computerSelection === 'Rock') {
+                document.getElementById('result').innerHTML = 'YOU LOST! ' + computerSelection + ' beats ' + playerSelection + '!';
+                losses++;
+                document.getElementById('losses').innerHTML = losses;
+        } else if(
+            playerSelection === 'Rock' && computerSelection === 'Scissors' ||
+            playerSelection === 'Paper' && computerSelection === 'Rock' ||
+            playerSelection === 'Scissors' && computerSelection === 'Paper') {
+                document.getElementById('result').innerHTML = 'WINNER! ' + playerSelection + ' beats ' + computerSelection + '!';
+                wins++;
+                document.getElementById('wins').innerHTML = wins;
+        } 
     }
-    
-    
 </script>
 </body>
 </html>
